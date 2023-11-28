@@ -33,13 +33,28 @@ def generate_unique_permutations(decimal_list, n):
 
     while len(permutations) < n:
         shuffled = random_permutation(decimal_list.copy())  # Получаем случайную перестановку
+        i = 0
+        if shuffled == decimal_list:
+            i+=1
+            shuffled = random_permutation(decimal_list.copy())  # Получаем случайную перестановку
         permutations.add(tuple(shuffled))  # Добавляем в множество перестановок
+        # print(shuffled)
+        print (i)
 
     return [list(perm) for perm in permutations]  # Преобразуем обратно в список списков
 
+def p_block(permutations_list, binary_list, n):
+    for index, perm in enumerate(permutations_list, 1):
+        if index == n:
+            permutations = perm
+    buf_binary_list = []
+    for i in range(len(binary_list)):
+        buf_binary_list.append(binary_list[permutations[i]])
+    return buf_binary_list
+
 # Пример использования
 initial_list = list(range(10))  # Исходный список от 0 до 9
-n_permutations = 5  # Количество случайных перестановок
+n_permutations = 10  # Количество случайных перестановок
 print(initial_list)
 
 random_permutations = generate_unique_permutations(initial_list, n_permutations)
@@ -49,8 +64,9 @@ for index, perm in enumerate(random_permutations, 1):
 
 # Пример использования:
 input_list = list(range(10))  # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-permutation_result = random_permutation(input_list)
-print(permutation_result)
+
+print(p_block(random_permutations, input_list, 3))
+
 # Пример использования:
 char = 'Д'
 binary = binary_representation(char)
