@@ -87,8 +87,9 @@ def decimal_to_binary(decimal_num, width):
     return list(binary_str)
 
 
-def s_block_encrypt(binary_list):
-    decimal = binary_to_decimal(binary_list)
+def s_block_encrypt(binary_message):
+    '''S-блок шифровки'''
+    decimal = binary_to_decimal(binary_message)
     if decimal == 0:
         new_decimal = 6
     elif decimal == 1:
@@ -125,8 +126,9 @@ def s_block_encrypt(binary_list):
     return new_binary
 
 
-def s_block_decrypt(binary_list):
-    decimal = binary_to_decimal(binary_list)
+def s_block_decrypt(encrypted_binary):
+    '''S-блок для расшифровки'''
+    decimal = binary_to_decimal(encrypted_binary)
     if decimal == 6:
         new_decimal = 0
     elif decimal == 8:
@@ -159,11 +161,12 @@ def s_block_decrypt(binary_list):
         new_decimal = 14
     elif decimal == 1:
         new_decimal = 15
-    new_binary = decimal_to_binary(new_decimal, 4)
-    return new_binary
+    decrypted_binary = decimal_to_binary(new_decimal, 4)
+    return decrypted_binary
 
 
 def battery_s_block_encrypt(input_sequence):
+    '''делит 32-битную последовательность на части по 4 бита и зашифровывает каждую с помощью S-блока'''
     encrypted_message=''
     for i in range(0, 32, 4):
         input_part = input_sequence[i:i+4]
@@ -172,6 +175,7 @@ def battery_s_block_encrypt(input_sequence):
 
 
 def battery_s_block_decrypt(input_sequence):
+    '''делит 32-битную последовательность на части по 4 бита и расшифровывает каждую с помощью S-блока'''
     decrypted_message=''
     for i in range(0, 32, 4):
         input_part = input_sequence[i:i+4]
